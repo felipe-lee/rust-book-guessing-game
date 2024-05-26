@@ -5,3 +5,10 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
+
+[workspace.metadata.cross.build]
+default-target = "x86_64-pc-windows-gnu"
+pre-build = [# additional commands to run prior to building the package
+    "dpkg --add-architecture $CROSS_DEB_ARCH",
+    "apt update && apt --assume-yes install libssl-dev:$CROSS_DEB_ARCH"
+]
